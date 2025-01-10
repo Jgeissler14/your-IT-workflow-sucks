@@ -27,27 +27,30 @@ Ansible is a simple and powerful automation tool that can help you manage config
 
 2. **Create Your First Ansible Playbook**
 
-   Let's start by creating a simple playbook. Create a file named `playbook.yml` with the following content:
+   Let's start by creating a simple playbook. Create a file named `playbook.yaml` with the following content:
 
    ```yaml
-   ---
-   - name: Install Nginx web server
-     hosts: localhost
-     tasks:
-       - name: Ensure Nginx is installed
-         apt:
-           name: nginx
-           state: present
+    ---
+    - name: Install Nginx web server
+      become: yes
+      hosts: all
+      tasks:
+      - name: Ensure Nginx is installed
+        yum:
+          name: nginx
+          state: present
    ```
 
    This playbook will install Nginx on your local machine using the `apt` module.
 
 3. **Run the Playbook**
 
-   Open a terminal and navigate to the directory where you saved `playbook.yml`. Then run:
+   Open a terminal and navigate to the directory where you saved `playbook.yaml
+   `. Then run:
 
    ```
-   ansible-playbook playbook.yml
+   ansible-playbook playbook.yaml
+   
    ```
 
    You should see Ansible connecting to your localhost and installing Nginx.
@@ -64,7 +67,8 @@ Ansible is a simple and powerful automation tool that can help you manage config
      54.123.45.67 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/my-ec2-key.pem
      ```
 
-   - Now, update the playbook to install a package (e.g., `nginx`) on the EC2 instance instead of `localhost`. Modify your `playbook.yml` like this:
+   - Now, update the playbook to install a package (e.g., `nginx`) on the EC2 instance instead of `localhost`. Modify your `playbook.yaml
+   ` like this:
 
      ```yaml
      ---
@@ -82,7 +86,8 @@ Ansible is a simple and powerful automation tool that can help you manage config
    Run the playbook on the EC2 instance with the following command:
 
    ```
-   ansible-playbook -i hosts.ini playbook.yml
+   ansible-playbook -i hosts.ini playbook.yaml
+   
    ```
 
    This command will apply the playbook to your EC2 instance, installing Nginx on it.
@@ -92,10 +97,9 @@ Ansible is a simple and powerful automation tool that can help you manage config
 Here are some commonly used Ansible commands:
 
 - `ansible --version` - Check the version of Ansible installed
-- `ansible-playbook playbook.yml` - Run an Ansible playbook
+- `ansible-playbook playbook.yaml` - Run an Ansible playbook
 - `ansible -m ping localhost` - Ping localhost to test connectivity
-- `ansible -i hosts.ini ec2 -m apt -a "name=nginx state=present"` - Run a module directly on a host
-- `ansible-playbook -i hosts.ini playbook.yml --check` - Perform a dry run of a playbook
+- `ansible-playbook -i hosts.ini playbook.yaml --check` - Perform a dry run of a playbook
 
 ## Next Steps
 
